@@ -1,0 +1,105 @@
+/* Estilos generales */
+.page-class {
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/dia.jpg');
+  background-size: cover;
+  background-Position: center;
+}
+
+.title-container {
+  position: relative;
+  text-align: center;
+}
+
+.title {
+  font-size: 36px;
+  color: #080808;
+  text-align: center;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.h1-title {
+  color: #080808;
+  text-transform: uppercase;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.overlay-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.4;
+
+}
+
+.table-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+  min-height: 300px;
+}
+
+
+.course-table {
+  width: 80%;
+  border-collapse: collapse;
+  border: 2px solid red;
+}
+
+.course-table th,
+.course-table td {
+  padding: 10px;
+  text-align: left;
+}
+
+.enroll-button {
+  background-color: red !important;
+  color: rgb(3, 205, 231) !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: background-color 0.3s !important;
+  font-family: Helvetica;
+}
+
+.enroll-button:hover {
+  background-color: #070404 !important;
+  color: white !important;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif !important;
+}
+
+/* Estilos adicionales para la tabla */
+
+.search-pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.no-data-message {
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+
+.course-table th {
+  
+  background-color: transparent;
+  backdrop-filter: blur(30px);
+  color: white;
+}
+
+
+.course-table tbody tr:nth-child(even) {
+  background-color: grey;
+}
+
+.course-table tbody tr:nth-child(odd) {
+  background-color: black;
+  color: white;
+}
+

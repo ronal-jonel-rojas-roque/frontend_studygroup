@@ -1,6 +1,22 @@
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Installs
+    npm install react-router-dom
+    npm install react-icons
+    npm install axios
+    npm install js-cookie
+    npm install react-bootstrap bootstrap
+    npm install @material-ui/core @material-ui/icons
+    npm install react-table
+    npm install @mui/material @emotion/react @emotion/styled
+    npm install atropos
+    npm install sweetalert2
+
+
+
+
+
 
 ## Available Scripts
 

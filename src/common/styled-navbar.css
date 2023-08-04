@@ -1,0 +1,114 @@
+*,
+*::after,
+*::before {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.nav {
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 8vh;
+    background: black;
+}
+
+.brand {
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.item {
+    list-style: none;
+}
+
+.link {
+    text-decoration: none;
+    color: rgb(204, 204, 204);
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 3rem;
+}
+
+.toggler {
+    display: none;
+}
+
+.toggler div {
+    width: 2.5rem;
+    height: 0.2rem;
+    margin: 0.4rem;
+    background: rgb(204, 204, 204);
+    transition: 0.3s ease-in;
+}
+
+@media screen and (max-width: 768px) {
+    .toggler {
+        display: block;
+        cursor: pointer;
+    }
+
+    .menu {
+        position: fixed;
+        top: 7vh;
+        right: 0;
+        height: 93vh;
+        width: 45vw;
+        background: black;
+        flex-direction: column;
+        transform: translateX(100%);
+        transition: 0.5s ease-in;
+    }
+
+    .image-navbar {
+        display: none;
+    }
+
+    .profile-text {
+        display: inline;
+        color: rgb(204, 204, 204);
+        text-decoration: none;
+    }
+}
+
+/* Active Class */
+.active {
+    transform: translateX(0%);
+}
+
+/* Toggle Icon Animation */
+
+.toggle .line1 {
+    transform: rotate(-45deg) translate(-4px, 5px);
+}
+
+.toggle .line2 {
+    opacity: 0;
+}
+
+.toggle .line3 {
+    transform: rotate(45deg) translate(-4px, -5px);
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: black;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Estilos para la imagen en el botón "Mi Perfil" */
+.image-navbar, .image {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
