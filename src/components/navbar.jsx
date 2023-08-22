@@ -63,7 +63,7 @@ const NavBar = () => {
                         </a>
                     </li>
                     <li className="item">
-                        <a href="#" className="link">
+                        <a href="/perfil" className="link">
                             <img
                                 src="https://e7.pngegg.com/pngimages/513/842/png-clipart-meeting-computer-icons-business-study-material-text-logo.png"
                                 className="image-navbar" />

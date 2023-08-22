@@ -6,6 +6,12 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import '../../common/styled-modal.css';
 import ModalSelectPerfil from './Modal-Select-Perfil';
+import ClickableImage from './ClickableImage';
+import { IoIosImages } from "react-icons/io";
+import EnlargedImageModal from '../imagen-grande';
+import { BsGenderMale } from "react-icons/bs";
+import { BsGenderFemale } from "react-icons/bs";
+import { BsGenderAmbiguous } from "react-icons/bs";
 
 const ModalTeacher = ({
     modalShow,
@@ -26,16 +32,23 @@ const ModalTeacher = ({
     const [imageModal, setImageModal] = useState('');
     const [showOptions, setShowOptions] = useState(false);
     const imageInputRef = useRef(null);
-    const [selectedImage, setSelectedImage] = useState('');
     const [showModal, setShowModal] = useState(false);
-
     const ImageDefault = '../../user_perfil/iconos/icono-defaul-hombre.png';
-    const generos = ['Masculino', 'Femenino', 'Otro'];
+
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const [selectedProfileImage, setSelectedProfileImage] = useState(null);
     const [showProfileImageModal, setShowProfileImageModal] = useState(false);
+
+    const [showEnlargedModal, setShowEnlargedModal] = useState(false);
+
+    const openEnlargedModal = () => {
+        setShowEnlargedModal(true);
+    };
 
     useEffect(() => {
         setIsModalOpen(modalShow);
+        setShowProfileImageModal(false); // Asegurarse de que se cierre el modal de selección de imagen
         document.body.classList.toggle('modal-open', modalShow);
     }, [modalShow]);
 
@@ -118,7 +131,7 @@ const ModalTeacher = ({
         try {
             if (isCreating) {
                 if (!usernameModal || !passwordModal || !dniModal || !nameModal || !appatModal || !apmatModal || sexoModal || !birthayModal || !imageModal) {
-                    // Mostrar mensaje de error si algún campo está vacío
+
                     alert('Por favor, completa todos los campos');
                     return;
                 }
@@ -189,19 +202,17 @@ const ModalTeacher = ({
         }
     }
 
-    const onImageSelect = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setSelectedImage(reader.result);
-            };
-            reader.readAsDataURL(file);
-        }
+    const onImageSelect = (image) => {
+        setSelectedProfileImage(image);
+        setShowProfileImageModal(false);
     };
 
     const onShowProfileImageModal = () => {
         setShowProfileImageModal(true);
+    };
+
+    const toggleEnlargedModal = () => {
+        setShowEnlargedModal(!showEnlargedModal);
     };
 
     return (
@@ -209,11 +220,20 @@ const ModalTeacher = ({
             <Modal show={modalShow} onHide={onClose} size="md" dialogClassName="modal2">
                 <Modal.Header closeButton className="custom-modal-header">
                     <Modal.Title>{isCreating ? 'Crear Usuario' : 'Editar Usuario'}</Modal.Title>
+                    <div>
+                        <ModalSelectPerfil
+                            show={showProfileImageModal}
+                            onHide={() => setShowProfileImageModal(false)}
+                            onImageSelect={onImageSelect}
+                            onClose={() => setShowProfileImageModal(false)} />
+                    </div>
+
                 </Modal.Header>
                 <Modal.Body className={`modal2-content`}>
+
                     <div className="text-center mb-4">
                         <img
-                            src={selectedImage || imageModal || ImageDefault}
+                            src={selectedProfileImage || ImageDefault}
                             alt="Foto de perfil"
                             className="rounded-circle custom-modal-image"
                             onClick={toggleShowOptions}
@@ -221,12 +241,9 @@ const ModalTeacher = ({
                         {showOptions && (
                             <div className="position-relative d-inline-flex flex-column">
                                 <div className="d-flex flex-column">
-                                    <a className='btn-modal-t' onClick={toggleShowOptions}>
-                                        Ver foto
-                                    </a>
+                                    <ClickableImage onOpenEnlargedModal={openEnlargedModal} />
                                     <label className='btn-modal-t' onClick={onShowProfileImageModal}>
-                                        Subir foto
-                                        <span className="upload-icon">+</span>
+                                        <IoIosImages className='icon-modal-teacher-galery' />
                                     </label>
                                 </div>
                                 <input
@@ -234,7 +251,7 @@ const ModalTeacher = ({
                                     accept="image/*"
                                     className="d-none"
                                     ref={imageInputRef}
-                                    onChange={onImageSelect}
+                                    onChange={onChangeModalImage}
                                 />
                             </div>
                         )}
@@ -301,11 +318,15 @@ const ModalTeacher = ({
                                 onChange={onChangeModalSexo}
                             >
                                 <option value="">Selecciona un género</option>
-                                {generos.map((genero) => (
-                                    <option key={genero} value={genero}>
-                                        {genero}
-                                    </option>
-                                ))}
+                                <option value="Masculino">
+                                    <BsGenderMale /> Masculino
+                                </option>
+                                <option value="Femenino">
+                                    <BsGenderFemale /> Femenino
+                                </option>
+                                <option value="Otro">
+                                    <BsGenderAmbiguous /> Otro
+                                </option>
                             </Form.Select>
                         </Form.Group>
                         <Form.Group controlId="birthday" className="flex-grow-1 ml-2 custom-modal-input">
@@ -326,12 +347,12 @@ const ModalTeacher = ({
                         {isCreating ? 'Guardar' : 'Actualizar'}
                     </Button>
                 </Modal.Footer>
+                <EnlargedImageModal
+                    show={showEnlargedModal}
+                    onHide={toggleEnlargedModal}
+                    imageSrc={selectedProfileImage || ImageDefault}
+                />
             </Modal >
-            <ModalSelectPerfil 
-            show={showProfileImageModal} 
-            onHide={() => setShowProfileImageModal(false)} 
-            onImageSelect={onImageSelect} 
-            onClose={() => setShowProfileImageModal(false)}/>
 
         </>
     );

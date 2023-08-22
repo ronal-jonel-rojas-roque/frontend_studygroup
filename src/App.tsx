@@ -5,8 +5,11 @@ import './common/styled-app.css';
 import Teacher from './page/teacher/teacher.page';
 import Class from './page/class/class.page';
 import Contact from './page/contact/contact.page';
+import Perfil from './page/perfil/perfil';
+import UserDatosPerfil from './components/user-datos-perfil';
+import UserCoursePerfil from './components/user-course-perfil';
 
-function App( ) {
+function App() {
   return (<div>
     <Routes>
       <Route path="/" Component={Login} />
@@ -15,6 +18,7 @@ function App( ) {
       <Route path="/teacher" element={<Teacher />} />
       <Route path="/class" element={<Class />} />
       <Route path="/contact" element={<Contact />} />
+      <Route path="/perfil" element={<Perfil />} />
     </Routes>
   </div>
 

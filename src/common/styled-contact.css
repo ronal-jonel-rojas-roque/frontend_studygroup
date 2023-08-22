@@ -35,7 +35,6 @@ h2 {
   z-index: 1;
 }
 
-
 .content-section {
   display: flex;
   justify-content: space-between;
@@ -44,7 +43,6 @@ h2 {
   background: rgb(24, 18, 18);
   overflow: hidden;
 }
-
 
 .form-section {
   display: flex;
@@ -149,9 +147,7 @@ h2 {
 }
 
 .heid {
-  /* Otros estilos */
   height: 100px;
-  /* Altura del campo */
 }
 
 .icono-ub {
@@ -182,7 +178,6 @@ h2 {
   color: rgb(24, 67, 211);
 }
 
-
 .modal1 {
   display: none;
   position: fixed;
@@ -196,7 +191,7 @@ h2 {
   max-width: 600px;
   max-height: 400px;
   margin: 50px auto;
-  
+
 }
 
 .modal1.show {

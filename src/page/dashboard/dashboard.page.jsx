@@ -11,8 +11,8 @@ const { Title } = Typography;
 const Dashboard = () => {
 
     const UrlCourse = "http://localhost:3001/courses";
-    const UrlEst = "http://localhost:3001/students";
-    const UrlDoc = "http://localhost:3001/teacher";
+    const UrlEst = "http://localhost:3001/user/students";
+    const UrlDoc = "http://localhost:3001/user/teacher";
     const UrlClass = "http://localhost:3001/class";
 
     const [cursosData, setCursosData] = useState([]);
@@ -28,6 +28,7 @@ const Dashboard = () => {
             const response = await fetch(UrlCourse);
             const data = await response.json();
             setCursosData(data);
+            setNumClass(data.count);
         } catch (error) {
             console.error("Error al obtener los datos de cursos:", error);
         }
@@ -53,7 +54,7 @@ const Dashboard = () => {
         }
     };
 
-    const fetchClass = async () => {
+    /* const fetchClass = async () => {
         try {
             const response = await fetch(UrlClass);
             const data = await response.json();
@@ -61,20 +62,20 @@ const Dashboard = () => {
         } catch (error) {
             console.error("Error al obtener los datos de Clases :", error);
         }
-    };
+    }; */
 
     useEffect(() => {
         fetchCursosData();
         fetchDocentesData();
         fetchNumEstudiantes();
-        fetchClass();
+       /*  fetchClass(); */
     }, [])
 
     // Esta función convierte el objeto del docente en un objeto con las propiedades requeridas para la tabla
     const mapDocenteToTableData = (docente) => ({
         key: docente.user_id,
-        image_url: docente.user.image_url,
-        name: `${docente.user.name} ${docente.user.apellido_pat} ${docente.user.apellido_mat}`,
+        image_url: docente.image_url,
+        name: `${docente.name} ${docente.apellido_pat} ${docente.apellido_mat}`,
     });
 
     const limitedDocentesData = docentesData ? docentesData.slice(0, 7) : [];

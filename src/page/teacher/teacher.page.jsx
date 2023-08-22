@@ -9,7 +9,7 @@ import Header from "../../components/header-component";
 import Footer from '../../components/footer';
 
 function Teacher() {
-    const Urlteacher = 'http://localhost:3001/teacher';
+    const Urlteacher = 'http://localhost:3001/user/teacher';
     const [docentesData, setDocentesData] = useState([]);
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -26,8 +26,8 @@ function Teacher() {
     const getData = async () => {
         try {
             const result = await axios.get(`${pagination}limit=${teacherPerPage}&page=${currentPage}`);
-            console.log("Respuesta de la API:", result.data);
-            setData(result.data.data);
+            console.log("Respuesta de la API:", result);
+            setData(result.data);
             const totalCount = result.data.count; // Obtener el total de usuarios desde la respuesta de la API
             const newTotalPages = Math.ceil(totalCount / teacherPerPage);
             setTotalPages(newTotalPages);
@@ -88,7 +88,6 @@ function Teacher() {
             </h2>
             <div>
                 <ModalTeacher
-                className= "modal-root"
                 modalShow={showModal}
                 onClose={() => setShowModal(false)}
                 user={isCreating ? {} : selectedUser}
@@ -103,12 +102,12 @@ function Teacher() {
                     docentesData.data.slice(startIndex, endIndex).map((docente, index) => (
                         <div key={index} className='card'>
                             <div className='card-image'>
-                                <img src={docente.user.image_url} alt={docente.user.name} />
+                                <img src={docente.image_url} alt={docente.name} />
                             </div>
                             <div className='card-content'>
-                                <h3 className='h3-user'>{docente.user.name}</h3>
-                                <p className='p-user'>{docente.user.apellido_pat} {docente.user.apellido_mat}</p>
-                                <Link to={`/detail/${docente.user.user_id}`} className='ver-usuario-button'>Detalles </Link>
+                                <h3 className='h3-user'>{docente.name}</h3>
+                                <p className='p-user'>{docente.apellido_pat} {docente.apellido_mat}</p>
+                                <Link to={`/detail/${docente.user_id}`} className='ver-usuario-button'>Detalles </Link>
                             </div>
                         </div>
                     ))

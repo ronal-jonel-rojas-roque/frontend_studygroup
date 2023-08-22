@@ -3,11 +3,13 @@ import Modal from 'react-bootstrap/Modal';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
+import { FaFileImage } from "react-icons/fa6";
 import { Button } from 'antd';
 
-const ModalSelectPerfil = ({ show, onHide, onSelect, onClose }) => {
+const ModalSelectPerfil = ({ show, onHide, onImageSelect, onClose }) => {
     const [selectedImage, setSelectedImage] = useState('');
     const [selectedGender, setSelectedGender] = useState('hombre');
+    const [selectedFile, setSelectedFile] = useState(null);
 
     const ImageDefaultMen = '../../user_perfil/iconos/icono-defaul-hombre.png';
     const ImageDefaultWoMen = '../../user_perfil/iconos/icono-defaul-mujer.png';
@@ -27,13 +29,25 @@ const ModalSelectPerfil = ({ show, onHide, onSelect, onClose }) => {
         setSelectedImage('');
     };
 
+    const handleAddImage = () => {
+        onImageSelect(selectedImage);
+        onClose();
+    };
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setSelectedImage(URL.createObjectURL(file));
+            setSelectedFile(file);
+        }
+    };
+
     return (
-        <Modal className='modal3' show={show} onHide={onHide}>
-            <div className='contenedor-modal-select'>
-                <Modal.Header closeButton>
+        <>
+            <Modal dialogClassName="modal2" size="md" show={show} onHide={onHide} >
+                <Modal.Header closeButton className='modal-titles'>
                     <Modal.Title>Selecciona tu foto de perfil</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body className={`modal-contents`}>
                     <div>
                         <Row>
                             <Col xs={12}>
@@ -49,21 +63,22 @@ const ModalSelectPerfil = ({ show, onHide, onSelect, onClose }) => {
                         </Row>
                         <Row>
                             <Col xs={5}>
-                                <h6>Abrir galería</h6>
+                                <h6 className='text'>Visualiación Previa</h6>
                                 <label className="upload-avatar-label">
+                                    {/* <div className="upload-avatar-icon-container" onClick={() => document.querySelector('input[type="file"]').click()}>
+                                        
+                                    <FaFileImage className="upload-avatar-icon" />
+                                    </div> */}
                                     <img
                                         src={selectedImage || (selectedGender === 'hombre' ? ImageDefaultMen : ImageDefaultWoMen)}
                                         alt="Foto de perfil"
-                                        className="rounded-circle custom-modal-image"
+                                        className="rounded-circle custom-modal-img"
                                     />
-                                    <input type="file" accept="image/*" style={{ display: 'none' }} onChange={onSelect} />
-                                    <span className="upload-avatar-icon" onClick={() => document.querySelector('input[type="file"]').click()}>
-                                        {/* Agrega aquí tu icono para seleccionar archivos */}
-                                    </span>
+                                    <input type="file" accept="image/*" onChange={handleFileChange} />
                                 </label>
                             </Col>
                             <Col xs={7}>
-                                <h6>Imágenes disponibles</h6>
+                                <h6 className='text'>Imágenes disponibles</h6>
                                 <div className="avatar-scroll" style={{ height: '200px', overflowY: 'auto' }}>
                                     {selectedGender === 'hombre' ? (
                                         avataresHombre.map((avatar, index) => (
@@ -94,15 +109,15 @@ const ModalSelectPerfil = ({ show, onHide, onSelect, onClose }) => {
                     </div>
                 </Modal.Body>
                 <Modal.Footer className='modal-footer-t'>
-                    <Button variant="secondary" onClick={onClose}>
+                    <Button variant="secondary" onClick={onClose} className='button'>
                         Cancelar
                     </Button>
-                    <Button variant="primary" >
+                    <Button variant="primary" onClick={handleAddImage} className='button'>
                         Agregar
                     </Button>
                 </Modal.Footer>
-            </div>
-        </Modal>
+            </Modal>
+        </>
     );
 };
 

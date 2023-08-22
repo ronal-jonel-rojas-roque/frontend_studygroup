@@ -6,11 +6,14 @@ import { useTable, useSortBy, usePagination, useGlobalFilter, useAsyncDebounce }
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { TextField, Button } from '@mui/material';
 import SearchIcon from '../../assets/search.png';
+import ModalDetailCourse from '../../components/modal/modal-detail-course';
 
 function Class() {
     const Url = 'http://localhost:3001/courses';
     const [courseData, setCourseData] = useState([]);
     const [searchValue, setSearchValue] = useState('');
+    const [showModal, setShowModal] = useState(false);
+    const [selectedCourse, setSelectedCourse] = useState(null);
 
     const theme = createTheme({
         palette: {
@@ -32,7 +35,10 @@ function Class() {
             console.error("Error al obtener los datos de los cursos:", error);
         }
     }
-
+    const handleShowModal = (row) => {
+        setSelectedCourse(row);
+        setShowModal(true);
+    };
     useEffect(() => {
         fetchCourseData();
     }, []);
@@ -49,7 +55,15 @@ function Class() {
             },
             {
                 Header: 'Inscribirse al curso',
-                Cell: ({ row }) => <Button variant='contained' className='enroll-button'>Inscribirse</Button>,
+                Cell: ({ row }) => (
+                    <Button
+                        variant='contained'
+                        className='enroll-button'
+                        onClick={() => handleShowModal(row.original)}
+                    >
+                        Inscribirse
+                    </Button>
+                ),
             },
         ],
         []
@@ -139,6 +153,15 @@ function Class() {
                                     No hay cursos con este nombre
                                 </td>
                             )}
+                            <div>
+                                {selectedCourse && (
+                                    <ModalDetailCourse
+                                        course={selectedCourse}
+                                        onClose={() => setSelectedCourse(null)}
+                                    />
+                                )}
+
+                            </div>
                         </tbody>
 
                     </table>
